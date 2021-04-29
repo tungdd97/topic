@@ -1,0 +1,6 @@
+configparser==3.5.0
+Flask
+flask_cors
+requests
+peewee
+python-dotenv
