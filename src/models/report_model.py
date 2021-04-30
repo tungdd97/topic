@@ -10,9 +10,13 @@ class ReportModel(BaseModel):
     IDGVHD = IntegerField()
     DiemLan1 = TextField()
     DiemLan2 = TextField()
-    DieuKienBaoVe = TimestampField()
+    DieuKienBaoVe = CharField()
     ThoiGianTao = TimestampField()
     ThoiGianCapNhat = TimestampField()
 
     class Meta:
         table_name = 'BaoCaoTong'
+
+    @staticmethod
+    def get_report_id_sinh_vien(id_sinh_vien):
+        return ReportModel.get(ReportModel.IDSinhVien == id_sinh_vien)

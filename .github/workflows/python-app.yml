@@ -16,15 +16,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-#    - name: Install requirements.txt
-#      run: |
-#        if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+    - name: Install requirements.txt
+      run: |
+        if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
     - name: Run bash script ckeck docker
       run:
-        sh bin/check.sh flask_cicd:v1
+        sh bin/check.sh topic:v1
     - name: Docker build image
       run:
-        docker build -t flask_cicd:v1 .
+        docker build -t topic:v1 .
     - name: Run docker image
       run:
-        docker run --name flask-api -p 9799:9799 -d flask_cicd:v1
+        docker run --name topic-api -p 5000:5000 -d topic:v1

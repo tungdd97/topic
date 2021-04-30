@@ -39,4 +39,8 @@ class StudentModel(BaseModel):
     def get_all_student():
         return StudentModel.select().execute()
 
+    @staticmethod
+    def get_student_by_id(student_id):
+        return StudentModel.get(StudentModel.id == student_id)
+
 

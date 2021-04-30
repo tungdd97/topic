@@ -8,9 +8,11 @@ WORKING_DIR = Application.WORKING_DIR
 
 APP_IMAGE_DIR = os.path.join(WORKING_DIR, File.IMAGE)
 APP_FILE_DIR = os.path.join(WORKING_DIR, File.FILE)
+APP_ZIP_DIR = os.path.join(WORKING_DIR, File.ZIP)
 
 
 os.makedirs(APP_IMAGE_DIR, exist_ok=True)
+os.makedirs(APP_FILE_DIR, exist_ok=True)
 os.makedirs(APP_FILE_DIR, exist_ok=True)
 
 

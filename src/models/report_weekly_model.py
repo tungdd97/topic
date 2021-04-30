@@ -21,3 +21,11 @@ class ReportWeeklyModel(BaseModel):
     @staticmethod
     def insert_one(data_insert):
         return ReportWeeklyModel.insert(data_insert).execute()
+
+    @staticmethod
+    def get_report_by_week(week):
+        return ReportWeeklyModel.select().where(ReportWeeklyModel.Tuan == week).execute()
+
+    @staticmethod
+    def get_report_by_id(week_id, image_id):
+        return ReportWeeklyModel.get((ReportWeeklyModel.id == week_id) & (ReportWeeklyModel.IDSinhVien == image_id))
