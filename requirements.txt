@@ -7,3 +7,4 @@ python-dotenv
 PyMySQL==1.0.2
 mysql-connector-python
 gunicorn
+psycopg2
