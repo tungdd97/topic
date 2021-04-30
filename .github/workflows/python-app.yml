@@ -16,9 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install requirements.txt
-      run: |
-        if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+#    - name: Install requirements.txt
+#      run: |
+#        if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
     - name: Run bash script ckeck docker
       run:
         sh bin/check.sh flask_cicd:v1
