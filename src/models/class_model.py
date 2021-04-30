@@ -5,8 +5,7 @@ from peewee import *
 import json
 
 
-class StudentModel(BaseModel):
-    id = IntegerField()
+class ClassModel(BaseModel):
     MaLop = IntegerField()
     TenLop = IntegerField()
     ThoiGianBDDoAn = TextField()

@@ -6,7 +6,6 @@ import json
 
 
 class ReportModel(BaseModel):
-    id = IntegerField()
     IDSinhVien = IntegerField()
     IDGVHD = IntegerField()
     DiemLan1 = TextField()

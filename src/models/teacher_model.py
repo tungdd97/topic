@@ -6,14 +6,14 @@ import json
 
 
 class TeacherModel(BaseModel):
-    id = IntegerField()
-    Ten = IntegerField()
+    Ten = CharField()
     SoLuong = IntegerField()
     MaGV = TextField()
     SDT = TextField()
-    Email = TimestampField()
-    ChucVu = TimestampField()
-    TrangThai = TimestampField()
+    Email = TextField()
+    ChucVu = CharField()
+    TrangThai = CharField()
+    ThoiGianTao = TimestampField()
     ThoiGianCapNhat = TimestampField()
 
     class Meta:
@@ -33,3 +33,12 @@ class TeacherModel(BaseModel):
     @staticmethod
     def get_id_by_ma(ma_gv):
         return TeacherModel.get(TeacherModel.MaGV == ma_gv).id
+
+    @staticmethod
+    def insert_many_teacher(data_teacher):
+        return TeacherModel.insert_many(data_teacher).execute()
+
+    @staticmethod
+    def get_magvhd_by_id(teacher_id):
+        return TeacherModel.get(TeacherModel.id == teacher_id).MaGV
+

@@ -6,7 +6,6 @@ import json
 
 
 class UserModel(BaseModel):
-    id = IntegerField()
     TaiKhoan = IntegerField()
     MatKhau = IntegerField()
     Quyen = TextField()
@@ -15,4 +14,9 @@ class UserModel(BaseModel):
     ThoiGianCapNhat = TimestampField()
 
     class Meta:
-        table_name = 'user'
+        table_name = 'User'
+
+    @staticmethod
+    def find_username_password(username, password):
+        return UserModel.select().where(TaiKhoan=username, MatKhau=password).execute()
+

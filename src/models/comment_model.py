@@ -6,8 +6,7 @@ import json
 
 
 class CommentModel(BaseModel):
-    id = IntegerField()
-    NguoiTaoGhiChu = IntegerField()
+    NguoiTaoGhiChu = CharField()
     NguoiNhanGhiChu = IntegerField()
     LoaiGhiChu = TextField()
     NoiDung = TextField()

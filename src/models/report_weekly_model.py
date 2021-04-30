@@ -6,15 +6,18 @@ import json
 
 
 class ReportWeeklyModel(BaseModel):
-    id = IntegerField()
     Tuan = IntegerField()
-    GhiChu = IntegerField()
+    GhiChu = TextField()
     IDSinhVien = TextField()
     HinhAnh = TextField()
-    File = TimestampField()
-    Url = TimestampField()
+    File = TextField()
+    Url = TextField()
     ThoiGianTao = TimestampField()
     ThoiGianCapNhat = TimestampField()
 
     class Meta:
         table_name = 'BaoCaoTuan'
+
+    @staticmethod
+    def insert_one(data_insert):
+        return ReportWeeklyModel.insert(data_insert).execute()

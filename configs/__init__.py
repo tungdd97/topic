@@ -6,7 +6,7 @@ if not os.environ.get('TOPIC_HOME'):
 
 LOCAL_ENV_FILE = 'local.env'
 TEST_ENV_FILE = 'test.env'
-ENV_FILE_PATH = os.environ.get('TOPIC') + '/' + TEST_ENV_FILE
+ENV_FILE_PATH = os.environ.get('TOPIC_HOME') + '/' + TEST_ENV_FILE
 load_dotenv(ENV_FILE_PATH)
 
 
@@ -27,3 +27,8 @@ class MYSQLConf:
         MYSQL_URI = 'mysql://{}:{}@{}:{}/{}'.format(MYSQL_USERNAME,
                                                     MYSQL_PASSWORD, MYSQL_HOST,
                                                     MYSQL_PORT, MYSQL_DATABASE)
+
+
+class File:
+    IMAGE = 'image'
+    FILE = 'file'

@@ -6,15 +6,15 @@ import json
 
 
 class StudentModel(BaseModel):
-    id = IntegerField()
-    Ten = IntegerField()
-    MaSV = IntegerField()
+    Ten = CharField()
+    MaSV = CharField()
     SDT = TextField()
     Email = TextField()
     IDLop = IntegerField()
     MaGVHD = CharField()
     TrangThai = CharField()
     IDDeTai = CharField()
+    ThoiGianTao = TimestampField()
     ThoiGianCapNhat = TimestampField()
 
     class Meta:
@@ -26,3 +26,17 @@ class StudentModel(BaseModel):
             MaGVHD=ma_gvhd,
             TrangThai="YeuCau"
         ).where(StudentModel.MaSV == ma_sv).execute()
+
+    @staticmethod
+    def insert_many_student(data_students):
+        return StudentModel.insert_many(data_students).execute()
+
+    @staticmethod
+    def get_student_by_magvhd(magvhd):
+        return StudentModel.select().where(StudentModel.MaGVHD == magvhd).execute()
+
+    @staticmethod
+    def get_all_student():
+        return StudentModel.select().execute()
+
+

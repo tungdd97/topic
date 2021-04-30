@@ -7,9 +7,8 @@ import json
 
 
 class ProjectModel(BaseModel):
-    id = IntegerField()
-    Ten = IntegerField()
-    MoTa = IntegerField()
+    Ten = CharField()
+    MoTa = TextField()
     TrangThai = TextField()
     NguoiTao = TextField()
     Loai = CharField()
@@ -35,3 +34,15 @@ class ProjectModel(BaseModel):
                 ProjectModel.NguoiTao == ma_gvhd
             )
         ).execute()
+
+    @staticmethod
+    def get_all_project():
+        return ProjectModel.select().execute()
+
+    @staticmethod
+    def insert_many_project(data_inserts):
+        return ProjectModel.insert_many(data_inserts).execute()
+
+    @staticmethod
+    def get_project_by_id(project_id):
+        return ProjectModel.get(ProjectModel.id == project_id)
