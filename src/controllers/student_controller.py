@@ -114,14 +114,14 @@ class StudentController:
             request_data = json.loads(request_data)
         except:
             return jsonify({"message": "Không thể lấy dữ liệu!", "code": 412}), 412
-        ma_sv = request_data.get("ma_sv")
-        noi_dung = request_data.get("noi_dung")
-        tra_ma_sv = True
+        ma_sv = request_data.get("masv")
+        noi_dung = request_data.get("noidung")
+        tra_ma_sv = StudentModel.get_student_by_ma(masv=ma_sv)
         if not tra_ma_sv:
             return jsonify({"message": "Mã sinh viên không hợp lệ! Vui lòng kiểm tra lại", "code": 412}), 412
         NguoiNhanGhiChu = TeacherModel.get_id_dean()
         comment_id = CommentModel.insert_comment(
-            NguoiTaoGhiChu=ma_sv,
+            NguoiTaoGhiChu=tra_ma_sv,
             NguoiNhanGhiChu=NguoiNhanGhiChu,
             LoaiGhiChu="sinh_vien_chua_nhan_do_an",
             NoiDung=noi_dung,

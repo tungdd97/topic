@@ -7,7 +7,6 @@ student_mod = Blueprint(__name__, __name__)
 
 
 @student_mod.route(URI.CONTACT, methods=["POST"])
-@try_catch_error
 def student_contact():
     return StudentController.send_contact_bean()
 
