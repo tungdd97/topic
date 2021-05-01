@@ -39,6 +39,10 @@ class TeacherModel(BaseModel):
         return TeacherModel.insert_many(data_teacher).execute()
 
     @staticmethod
+    def insert_one_teacher(data_teacher):
+        return TeacherModel.insert(data_teacher).execute()
+
+    @staticmethod
     def get_magvhd_by_id(teacher_id):
         return TeacherModel.get(TeacherModel.id == teacher_id).MaGV
 

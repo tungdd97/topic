@@ -36,10 +36,15 @@ class StudentController:
             request_data = json.loads(request_data)
         except:
             return jsonify({"message": "Không thể lấy dữ liệu!", "code": 412}), 412
-        all_insert_data = list()
         if isinstance(request_data, dict):
             request_data = [request_data]
-        for data in request_data:
+        StudentController.save_student(request_data)
+        return jsonify({"message": "Thêm sinh viên thành công!", "code": 200}), 200
+
+    @staticmethod
+    def save_student(students):
+        all_insert_data = list()
+        for data in students:
             all_insert_data.append({
                 "Ten": data.get("ten"),
                 "MaSV": data.get("masv"),
@@ -54,7 +59,6 @@ class StudentController:
             })
         if all_insert_data:
             StudentModel.insert_many_student(all_insert_data)
-        return jsonify({"message": "Thêm sinh viên thành công!", "code": 200}), 200
 
     @staticmethod
     def report_student(student_id):

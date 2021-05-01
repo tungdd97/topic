@@ -29,7 +29,8 @@ def execute_before_request():
         TeacherModel,
         StudentModel,
         ReportModel,
-        CommentModel
+        CommentModel,
+        UserModel
     ], safe=True)
 
 

@@ -1,6 +1,8 @@
 from flask import request, json, jsonify
 from src.common.utils import get_current_time, generate_md5_by_str
 from src.models.user_model import UserModel
+from src.models.student_model import StudentModel
+from src.models.teacher_model import TeacherModel
 
 
 class UserController:
@@ -25,7 +27,8 @@ class UserController:
             return jsonify({"message": "Không tìm thấy thông tin tài khoản!", "code": 413}), 413
         data = {
             "username": username,
-            "permission": user_data.permission
+            "permission": user_data.Quyen,
+            "lienket": user_data.LienKet
         }
         return jsonify({"message": "Đăng nhập thành công!", "data": data, "code": 200}), 200
 
@@ -47,14 +50,48 @@ class UserController:
         )
         if check_user_name:
             return jsonify({"message": f"Tài khoản {username} đã tồn tại!", "code": 413}), 413
+        lienket = None
+        if permission == "sinhvien":
+            student_data = {
+                "Ten": request_data.get("ten"),
+                "MaSV": request_data.get("masv"),
+                "SDT": request_data.get("sdt", ""),
+                "Email": request_data.get("email", ""),
+                "IDLop": request_data.get("idlop", ""),
+                "MaGVHD": "",
+                "IDDeTai": "",
+                "TrangThai": "TaoMoi",
+                "ThoiGianTao": get_current_time(),
+                "ThoiGianCapNhat": get_current_time()
+            }
+
+            lienket = StudentModel.insert_one_student(data=student_data)
+        if permission == "giaovien":
+            teacher_data = {
+                "Ten": request_data.get("ten"),
+                "SoLuong": 0,
+                "MaGV": request_data.get("magv"),
+                "SDT": request_data.get("sdt"),
+                "Email": request_data.get("email"),
+                "ChucVu": request_data.get("chucvu") if request_data.get("chucvu") else "GiaoVien",
+                "TrangThai": "",
+                "ThoiGianTao": get_current_time(),
+                "ThoiGianCapNhat": get_current_time()
+            }
+
+            lienket = TeacherModel.insert_many_teacher(teacher_data)
         user_data = {
-            "username": username,
-            "password": password_md5,
-            "permission": permission
+            "TaiKhoan": username,
+            "MatKhau": str(password_md5),
+            "Quyen": permission,
+            "LienKet": lienket,
+            "ThoiGianTao": get_current_time(),
+            "ThoiGianCapNhat": get_current_time()
         }
         user_id = UserModel.insert_user(data_insert=user_data)
         if not user_id:
             return jsonify({"message": "Tạo mới thông tin tài khoản thành công!", "code": 413}), 413
+
         data = {
             "username": username,
             "permission": permission

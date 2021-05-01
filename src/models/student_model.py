@@ -39,6 +39,10 @@ class StudentModel(BaseModel):
         return StudentModel.insert_many(data_students).execute()
 
     @staticmethod
+    def insert_one_student(data):
+        return StudentModel.insert(data).execute()
+
+    @staticmethod
     def get_student_by_magvhd(magvhd):
         return StudentModel.select().where(StudentModel.MaGVHD == magvhd).execute()
 

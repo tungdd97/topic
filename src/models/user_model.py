@@ -18,11 +18,11 @@ class UserModel(BaseModel):
 
     @staticmethod
     def find_username_password(username, password):
-        return UserModel.select().where((UserModel.TaiKhoan == username) & (UserModel.MatKhau == password)).execute()
+        return UserModel.get((UserModel.TaiKhoan == username) & (UserModel.MatKhau == password))
 
     @staticmethod
     def find_username(username):
-        return UserModel.get(UserModel.TaiKhoan == username)
+        return UserModel.select().where(UserModel.TaiKhoan == username).execute()
 
     @staticmethod
     def insert_user(data_insert):
