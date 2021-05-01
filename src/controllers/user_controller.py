@@ -30,7 +30,7 @@ class UserController:
             "permission": user_data.Quyen,
             "lienket": user_data.LienKet,
             "iddetai": "",
-            "ma_gvhd": "",
+            "id_gvhd": "",
         }
         if user_data.Quyen == "sinhvien":
             student_data = StudentModel.get_student_by_id(student_id=user_data.LienKet)
@@ -38,7 +38,9 @@ class UserController:
                 if student_data.IDDeTai:
                     data["iddetai"] = student_data.IDDeTai
                 if student_data.MaGVHD:
-                    data["ma_gvhd"] = student_data.MaGVHD
+                    teacher_id = TeacherModel.get_id_by_ma(student_data.MaGVHD)
+                    if teacher_id:
+                        data["id_gvhd"] = teacher_id
         return jsonify({"message": "Đăng nhập thành công!", "data": data, "code": 200}), 200
 
     @staticmethod
