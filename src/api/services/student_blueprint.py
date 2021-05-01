@@ -25,3 +25,13 @@ def add_student():
 @student_mod.route(URI.STUDENT, methods=["GET"])
 def get_students():
     return StudentController.get_list_student()
+
+
+@student_mod.route(URI.STUDENT_TEACHER, methods=["PUT"])
+def update_teacher(student_id):
+    return StudentController.join_teacher(student_id)
+
+
+@student_mod.route(URI.STUDENT_PROJECT, methods=["PUT"])
+def update_project(student_id):
+    return StudentController.update_request_select_project(student_id)

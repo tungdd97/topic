@@ -5,28 +5,26 @@ from src.models.student_model import StudentModel
 from src.controllers.file_controller import get_path_file
 from src.models.teacher_model import TeacherModel
 from src.models.report_weekly_model import ReportWeeklyModel
-import mimetypes
 from src.common import APP_FILE_DIR, APP_IMAGE_DIR
 
 
 class StudentController:
 
     @staticmethod
-    def join_teacher():
+    def join_teacher(student_id):
         try:
             request_data = request.data
             request_data = json.loads(request_data)
         except:
             return jsonify({"message": "Không thể lấy dữ liệu!", "code": 412}), 412
-        ma_sv = request_data.get("ma_sv")
-        ma_gvhd = request_data.get("ma_gvhd")
-        if not ma_gvhd or not ma_sv:
+        ma_gvhd = request_data.get("magv")
+        if not ma_gvhd:
             return jsonify(
                 {
-                    "message": "Không thể tìm thấy thông tin liên kết! Vui lòng kiểm tra lại mã sinh viên hoặc mã giáo viên",
+                    "message": "Không thể tìm thấy thông tin liên kết! Vui lòng kiểm tra lại mã giáo viên",
                     "code": 412}), 412
         StudentModel.update_request_join_by_student(
-            ma_sv=ma_sv,
+            student_id=student_id,
             ma_gvhd=ma_gvhd
         )
         return jsonify({"message": "Đã gửi yêu cầu!", "code": 200}), 200
@@ -141,8 +139,17 @@ class StudentController:
         lop = param.get("lop")
         trang_thai = param.get("trang_thai")
         gvhd = param.get("gvhd")
+        page = param.get("page", 1)
+        per_page = param.get("per_page", 10)
 
+        page = 0
+
+        paging = {
+            "page": page,
+            "per_page": per_page,
+        }
         students = StudentModel.get_all_student()
+
         for student in students:
             data = {
                 "masv": student.MaSV,
@@ -154,4 +161,23 @@ class StudentController:
                 "detai": "De tai"
             }
             result.append(data)
-        return jsonify({"message": "Tạo ghi chú thành công!", "data": result, "code": 200}), 200
+        return jsonify({"message": "Tạo ghi chú thành công!", "data": result, "paging": paging, "code": 200}), 200
+
+    @staticmethod
+    def update_request_select_project(student_id):
+        try:
+            request_data = request.data
+            request_data = json.loads(request_data)
+        except:
+            return jsonify({"message": "Không thể lấy dữ liệu!", "code": 412}), 412
+        project_id = request_data.get("project_id")
+        if not project_id:
+            return jsonify(
+                {
+                    "message": "Không thể tìm thấy thông tin liên kết!",
+                    "code": 412}), 412
+        StudentModel.update_request_join_project(
+            student_id=student_id,
+            project_id=project_id
+        )
+        return jsonify({"message": "Đã gửi yêu cầu!", "code": 200}), 200

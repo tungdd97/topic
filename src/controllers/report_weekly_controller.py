@@ -1,12 +1,6 @@
-from flask import request, json, jsonify
-from src.common.utils import get_current_time
-from src.models.comment_model import CommentModel
+from flask import jsonify
 from src.models.student_model import StudentModel
-from src.controllers.file_controller import get_path_file
-from src.models.teacher_model import TeacherModel
 from src.models.report_weekly_model import ReportWeeklyModel
-from src.models.report_model import ReportModel
-from src.common import APP_FILE_DIR, APP_IMAGE_DIR
 from configs import Topic
 
 
@@ -22,8 +16,8 @@ class ReportWeeklyController:
                 "tuan": week,
                 "masv": sinhvien.MaSV,
                 "ten": sinhvien.Ten,
-                "hinhanh": Topic.HOST + "/download/image/" + str(report_week.id) + "/" + str(report_week.IDSinhVien),
-                "file": Topic.HOST + "/download/file/" + str(report_week.id) + "/" + str(report_week.IDSinhVien),
+                "hinhanh": Topic.HOST + "/download/image/" + str(report_week.id) + "/" + str(report_week.IDSinhVien) if report_week.HinhAnh else "",
+                "file": Topic.HOST + "/download/file/" + str(report_week.id) + "/" + str(report_week.IDSinhVien) if report_week.File else "",
                 "ghichu": report_week.GhiChu,
             }
             results.append(data)

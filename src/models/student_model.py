@@ -21,11 +21,18 @@ class StudentModel(BaseModel):
         table_name = 'SinhVien'
 
     @staticmethod
-    def update_request_join_by_student(ma_sv, ma_gvhd):
+    def update_request_join_by_student(student_id, ma_gvhd):
         return StudentModel.update(
             MaGVHD=ma_gvhd,
             TrangThai="YeuCau"
-        ).where(StudentModel.MaSV == ma_sv).execute()
+        ).where(StudentModel.id == student_id).execute()
+
+    @staticmethod
+    def update_request_join_project(student_id, project_id):
+        return StudentModel.update(
+            IDDeTai=project_id,
+            TrangThai="YeuCau"
+        ).where(StudentModel.id == student_id).execute()
 
     @staticmethod
     def insert_many_student(data_students):

@@ -6,10 +6,10 @@ import json
 
 
 class UserModel(BaseModel):
-    TaiKhoan = IntegerField()
-    MatKhau = IntegerField()
-    Quyen = TextField()
-    LienKet = TextField()
+    TaiKhoan = CharField()
+    MatKhau = CharField()
+    Quyen = CharField()
+    LienKet = CharField()
     ThoiGianTao = TimestampField()
     ThoiGianCapNhat = TimestampField()
 
@@ -18,5 +18,12 @@ class UserModel(BaseModel):
 
     @staticmethod
     def find_username_password(username, password):
-        return UserModel.select().where(TaiKhoan=username, MatKhau=password).execute()
+        return UserModel.select().where((UserModel.TaiKhoan == username) & (UserModel.MatKhau == password)).execute()
 
+    @staticmethod
+    def find_username(username):
+        return UserModel.get(UserModel.TaiKhoan == username)
+
+    @staticmethod
+    def insert_user(data_insert):
+        return UserModel.insert(data_insert).execute()

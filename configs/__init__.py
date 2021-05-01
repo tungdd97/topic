@@ -15,18 +15,7 @@ class Application:
 
 
 class MYSQLConf:
-    MYSQL_HOST = os.environ.get('MYSQL_HOST')
-    MYSQL_PORT = int(os.environ.get('MYSQL_PORT'))
-    MYSQL_USERNAME = os.environ.get('MYSQL_USERNAME')
-    MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD')
-    MYSQL_DATABASE = os.environ.get('MYSQL_DATABASE')
-
-    if not MYSQL_USERNAME or not MYSQL_PASSWORD:
-        MYSQL_URI = 'mysql://{}:{}/{}'.format(MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE)
-    else:
-        MYSQL_URI = 'mysql://{}:{}@{}:{}/{}'.format(MYSQL_USERNAME,
-                                                    MYSQL_PASSWORD, MYSQL_HOST,
-                                                    MYSQL_PORT, MYSQL_DATABASE)
+    MYSQL_URI = os.environ.get("MYSQL_URI")
 
 
 class Topic:

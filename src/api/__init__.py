@@ -1,7 +1,10 @@
+import os
+
 from flask import Flask, jsonify
 from functools import wraps
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = os.urandom(24)
 
 
 def build_response_susccess(message=None, data=None):
