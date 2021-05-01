@@ -12,6 +12,7 @@ class URI:
     STUDENT_REPORT = "/student_report/<student_id>"
 
     PROJECT = "/project"
+    PROJECT_TEACHER = "/project_teacher/<teacher_id>"
 
     TEACHER = "/teacher"
 

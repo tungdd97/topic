@@ -13,3 +13,8 @@ def get_project():
 @project_mod.route(URI.PROJECT, methods=["POST"])
 def add_project():
     return ProjectController.add_project()
+
+
+@project_mod.route(URI.PROJECT_TEACHER, methods=["GET"])
+def get_project_by_teacher(teacher_id):
+    return ProjectController.get_by_project_teacher(teacher_id)

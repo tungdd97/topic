@@ -26,6 +26,24 @@ class ProjectController:
         return jsonify({"message": "request thành công!", "data": result, "code": 200}), 200
 
     @staticmethod
+    def get_by_project_teacher(teacher_id):
+        result = list()
+        try:
+            projects = ProjectModel.get_project_by_teacher(teacher_id)
+        except Exception as e:
+            print(e)
+            return jsonify({"message": "Có lỗi phát sinh trong server!", "code": 500}), 500
+        for project in projects:
+            result.append({
+                "id": project.id,
+                "Ten": project.Ten,
+                "Mota": project.MoTa,
+                "TrangThai": project.TrangThai,
+                "GhiChu": project.GhiChu
+            })
+        return jsonify({"message": "request thành công!", "data": result, "code": 200}), 200
+
+    @staticmethod
     def add_project():
         try:
             request_data = request.data
