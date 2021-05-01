@@ -88,12 +88,14 @@ class TeacherController:
             return jsonify({"messgae": "Không tìm thấy mã giáo viên!", "code": 413}), 413
         students = StudentModel.get_student_by_magvhd(magvhd=ma_gvhd)
         for student in students:
-            project = ProjectModel.get_project_by_id(student.IDDetai)
+            project = None
+            if student.IDDeTai:
+                project = ProjectModel.get_project_by_id(student.IDDeTai)
             data = {
                 "masv": student.MaSV,
                 "ten": student.Ten,
-                "detai": project.Ten,
-                "ghichu": project.GhiChu
+                "detai": project.Ten if project else "",
+                "ghichu": project.GhiChu if project else ""
             }
             result.append(data)
         return jsonify({"messgae": "request thành công!", "data": result, "code": 200}), 200
