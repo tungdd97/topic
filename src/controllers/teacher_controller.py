@@ -100,5 +100,47 @@ class TeacherController:
             result.append(data)
         return jsonify({"messgae": "request thành công!", "data": result, "code": 200}), 200
 
+    @staticmethod
+    def edit_project_by_teacher(teacher_id):
+        try:
+            request_data = request.data
+            request_data = json.loads(request_data)
+        except:
+            return jsonify({"message": "Không thể lấy dữ liệu!", "code": 412}), 412
 
+        ma_sv = request_data.get("ma_sv")
+        chuc_nang = request_data.get("chuc_nang")
+        if not ma_sv or not chuc_nang:
+            return jsonify({
+                "message": "Không thể thực hiện chức năng này!. Vui lòng điền đầy đủ thông tin.", "code": 412
+            }), 412
+        if chuc_nang == "sua_de_tai":
+            project_id = request_data.get("id_de_tai")
+            if not project_id:
+                return jsonify({
+                    "message": "Không thể thực hiện chức năng này!. Vui lòng điền đầy đủ thông tin về đề tài",
+                    "code": 412
+                }), 412
+            ma_gvhd = TeacherModel.get_magvhd_by_id(teacher_id)
+            if not ma_gvhd:
+                return jsonify({
+                    "message": "Không tìm thấy mã giáo viên hướng dẫn!",
+                    "code": 412
+                }), 412
+            StudentModel.update_project_by_teacher(
+                masv=ma_sv,
+                project_id=project_id
+            )
+            return jsonify({"message": "Đã sửa đề tài thành công!", "code": 200}), 200
 
+        if chuc_nang == "bo_de_tai":
+            ma_gvhd = TeacherModel.get_magvhd_by_id(teacher_id)
+            if not ma_gvhd:
+                return jsonify({
+                    "message": "Không tìm thấy mã giáo viên hướng dẫn!",
+                    "code": 412
+                }), 412
+            StudentModel.cancel_project_by_teacher(
+                masv=ma_sv
+            )
+            return jsonify({"message": "Đã bỏ đề tài thành công!", "code": 200}), 200

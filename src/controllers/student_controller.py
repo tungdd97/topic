@@ -97,7 +97,7 @@ class StudentController:
 
         data_insert_report = {
             "Tuan": week,
-            "GhiChu": note,
+            "GhiChu": note if note else "",
             "IDSinhVien": student_id,
             "HinhAnh": "<image_upload>".join(all_path_images),
             "File": "<file_upload>".join(all_path_files),

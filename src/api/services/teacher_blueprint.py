@@ -18,3 +18,9 @@ def add_teacher():
 @teacher_mod.route(URI.TEACHER_DETAIL, methods=["GET"])
 def get_teacher_detail(teacher_id):
     return TeacherController.get_list_student_by_teacher(teacher_id)
+
+
+@teacher_mod.route(URI.TEACHER_PROJECT_DETAIL, methods=["PUT"])
+def edit_project_by_teacher(teacher_id):
+    return TeacherController.edit_project_by_teacher(teacher_id)
+

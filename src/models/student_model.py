@@ -58,4 +58,16 @@ class StudentModel(BaseModel):
     def get_student_by_ma(masv):
         return StudentModel.get(StudentModel.MaSV == masv).id
 
+    @staticmethod
+    def update_project_by_teacher(masv, project_id):
+        return StudentModel.update(
+            IDDeTai=project_id
+        ).where(StudentModel.MaSV == masv).execute()
+
+    @staticmethod
+    def cancel_project_by_teacher(masv):
+        return StudentModel.update(
+            IDDeTai=None
+        ).where(StudentModel.MaSV == masv).execute()
+
 

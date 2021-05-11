@@ -29,3 +29,9 @@ class ReportWeeklyModel(BaseModel):
     @staticmethod
     def get_report_by_id(week_id, image_id):
         return ReportWeeklyModel.get((ReportWeeklyModel.id == week_id) & (ReportWeeklyModel.IDSinhVien == image_id))
+
+    @staticmethod
+    def update_note_report(week_id, ghi_chu):
+        return ReportWeeklyModel.update(
+            GhiChu=ghi_chu
+        ).where(ReportWeeklyModel.id == week_id).execute()

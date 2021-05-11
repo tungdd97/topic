@@ -18,5 +18,21 @@ class ReportModel(BaseModel):
         table_name = 'BaoCaoTong'
 
     @staticmethod
+    def insert_one(data_insert):
+        return ReportModel.insert(data_insert).execute()
+
+    @staticmethod
     def get_report_id_sinh_vien(id_sinh_vien):
         return ReportModel.get(ReportModel.IDSinhVien == id_sinh_vien)
+
+    @staticmethod
+    def update_point_report(id_sinh_vien, point, lan=1):
+        if lan == 1:
+            return ReportModel.update(
+                DiemLan1=point
+            ).where(ReportModel.IDSinhVien == id_sinh_vien).execute()
+        if lan == 2:
+            return ReportModel.update(
+                DiemLan2=point
+            ).where(ReportModel.IDSinhVien == id_sinh_vien).execute()
+

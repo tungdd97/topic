@@ -14,6 +14,7 @@ class URI:
     PROJECT = "/project"
     PROJECT_TEACHER = "/project_teacher/<teacher_id>"
 
+    TEACHER_PROJECT_DETAIL = "teacher_project_detail/<teacher_id>"
     TEACHER = "/teacher"
 
     TEACHER_DETAIL = "/teacher/<teacher_id>"
@@ -21,6 +22,7 @@ class URI:
     CONTACT = "/contact"
 
     REPORT_WEEKLY = "/report_weekly/<week>"
+    REPORT_WEEKLY_DETAIL = "/report_weekly/<week_id>/<week>"
 
     DOWNLOAD_IMAGE = "/download/image/<week_id>/<image_id>"
     DOWNLOAD_FILE = "/download/file/<week_id>/<file_id>"
