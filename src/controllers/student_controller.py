@@ -168,7 +168,7 @@ class StudentController:
                 "ten": student.Ten,
                 "lop": "12312312",
                 "hom_thu": "",
-                "trang_thai": student.TrangThai if not student.DeTai else "DaChon",
+                "trang_thai": student.TrangThai if not student.IDDeTai else "DaChon",
                 "gvhd": student.MaGVHD,
                 "detai": "De tai"
             }
