@@ -94,19 +94,27 @@ class StudentController:
             file.save(path_image_save)
 
             all_path_files.append(path_image_save)
-
-        data_insert_report = {
-            "Tuan": week,
-            "GhiChu": note if note else "",
-            "IDSinhVien": student_id,
-            "HinhAnh": "<image_upload>".join(all_path_images),
-            "File": "<file_upload>".join(all_path_files),
-            "Url": "",
-            "ThoiGianTao": get_current_time(),
-            "ThoiGianCapNhat": get_current_time()
-        }
-
-        report_weekly_id = ReportWeeklyModel.insert_one(data_insert_report)
+        report_weekly_id = ReportWeeklyModel.get_report_by_week_student_id(week, student_id)
+        if report_weekly_id:
+            ReportWeeklyModel.update_file_report(
+                week_id=report_weekly_id,
+                ghi_chu=note if note else "",
+                hinhanh="<image_upload>".join(all_path_images),
+                file="<file_upload>".join(all_path_files),
+                thoigiancapnhap=get_current_time()
+            )
+        else:
+            data_insert_report = {
+                "Tuan": week,
+                "GhiChu": note if note else "",
+                "IDSinhVien": student_id,
+                "HinhAnh": "<image_upload>".join(all_path_images),
+                "File": "<file_upload>".join(all_path_files),
+                "Url": "",
+                "ThoiGianTao": get_current_time(),
+                "ThoiGianCapNhat": get_current_time()
+            }
+            report_weekly_id = ReportWeeklyModel.insert_one(data_insert_report)
         if report_weekly_id:
             return jsonify({"message": "Upload thành công!", "code": 200}), 200
         return jsonify({"message": "Upload không thành công!", "code": 413}), 413
@@ -160,7 +168,7 @@ class StudentController:
                 "ten": student.Ten,
                 "lop": "12312312",
                 "hom_thu": "",
-                "trang_thai": student.TrangThai,
+                "trang_thai": student.TrangThai if not student.DeTai else "DaChon",
                 "gvhd": student.MaGVHD,
                 "detai": "De tai"
             }

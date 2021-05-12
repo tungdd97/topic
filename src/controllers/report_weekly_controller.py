@@ -13,10 +13,17 @@ class ReportWeeklyController:
 
     @staticmethod
     def get_report_by_week(week):
+        try:
+            args = request.args
+            ma_gv = args.get("magv")
+        except:
+            return jsonify({"message": "Không thể lấy dữ liệu!", "code": 412}), 412
         results = list()
         report_weekly = ReportWeeklyModel.get_report_by_week(week=week)
         for report_week in report_weekly:
             sinhvien = StudentModel.get_student_by_id(report_week.IDSinhVien)
+            if sinhvien.MaGVHD != ma_gv:
+                continue
             data = {
                 "tuan": week,
                 "masv": sinhvien.MaSV,
@@ -25,7 +32,8 @@ class ReportWeeklyController:
                     report_week.IDSinhVien) if report_week.HinhAnh else "",
                 "file": Topic.HOST + "/download/file/" + str(report_week.id) + "/" + str(
                     report_week.IDSinhVien) if report_week.File else "",
-                "ghichu": report_week.GhiChu,
+                # "ghichu": report_week.GhiChu,
+                "diem": ""
             }
             if week in ["8", "16"]:
                 try:
@@ -38,7 +46,7 @@ class ReportWeeklyController:
                         point = points.DiemLan1
                     if week == "16":
                         point = points.DiemLan2
-                data["diem"] = point
+                    data["diem"] = point
                 if data.get("diem") and float(data.get("diem")) > 5:
                     data["duyet"] = True
 

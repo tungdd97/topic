@@ -32,7 +32,10 @@ class TeacherModel(BaseModel):
 
     @staticmethod
     def get_id_by_ma(ma_gv):
-        return TeacherModel.get(TeacherModel.MaGV == ma_gv).id
+        try:
+            return TeacherModel.get(TeacherModel.MaGV == ma_gv).id
+        except:
+            return None
 
     @staticmethod
     def insert_many_teacher(data_teacher):
@@ -44,5 +47,7 @@ class TeacherModel(BaseModel):
 
     @staticmethod
     def get_magvhd_by_id(teacher_id):
-        return TeacherModel.get(TeacherModel.id == teacher_id).MaGV
-
+        try:
+            return TeacherModel.get(TeacherModel.id == int(teacher_id)).MaGV
+        except:
+            raise
