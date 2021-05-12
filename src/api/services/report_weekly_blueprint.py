@@ -11,5 +11,5 @@ def get_report_weekly(teacher_id, week):
 
 
 @report_weekly_mod.route(URI.REPORT_WEEKLY_DETAIL, methods=["PUT"])
-def update_report_weekly(week_id, week):
-    return ReportWeeklyController.update_information_report(week_id=week_id, week=week)
+def update_report_weekly(week):
+    return ReportWeeklyController.update_information_report(week=week)

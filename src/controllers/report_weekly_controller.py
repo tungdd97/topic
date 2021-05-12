@@ -55,19 +55,19 @@ class ReportWeeklyController:
         return jsonify({"message": "request thành công!", "data": results, "code": 200}), 200
 
     @staticmethod
-    def update_information_report(week_id, week):
+    def update_information_report(week):
         try:
             request_data = request.data
             request_data = json.loads(request_data)
         except:
             return jsonify({"message": "Không thể lấy dữ liệu!", "code": 412}), 412
         ma_sv = request_data.get("ma_sv")
-        ghi_chu = request_data.get("ghi_chu")
-        if ghi_chu:
-            ReportWeeklyModel.update_note_report(
-                week_id=week_id,
-                ghi_chu=ghi_chu
-            )
+        # ghi_chu = request_data.get("ghi_chu")
+        # if ghi_chu:
+        #     ReportWeeklyModel.update_note_report(
+        #         week_id=week_id,
+        #         ghi_chu=ghi_chu
+        #     )
         if week in ["8", "16"]:
             diem = request_data.get("diem")
             if diem and ma_sv:
