@@ -18,7 +18,11 @@ class UserModel(BaseModel):
 
     @staticmethod
     def find_username_password(username, password):
-        return UserModel.get((UserModel.TaiKhoan == username) & (UserModel.MatKhau == password))
+        try:
+            return UserModel.get((UserModel.TaiKhoan == username) & (UserModel.MatKhau == password))
+        except Exception as e:
+            print(e)
+            return None
 
     @staticmethod
     def find_username(username):

@@ -22,14 +22,21 @@ class StudentController:
             return jsonify({"message": "Không thể lấy dữ liệu!", "code": 412}), 412
         ma_gvhd = request_data.get("magv")
         if not ma_gvhd:
-            return jsonify(
-                {
-                    "message": "Không thể tìm thấy thông tin liên kết! Vui lòng kiểm tra lại mã giáo viên",
-                    "code": 412}), 412
+            return jsonify({
+                "message": "Không thể tìm thấy thông tin liên kết! Vui lòng kiểm tra lại mã giáo viên",
+                "code": 412
+            }), 412
+        soLuong = TeacherModel.get_so_luong_by_ma(ma_gvhd)
+        if int(soLuong) > 26:
+            return jsonify({
+                "message": "Không thể gửi yêu cầu vì giáo viên đã đủ lớp!",
+                "code": 413
+            }), 413
         StudentModel.update_request_join_by_student(
             student_id=student_id,
             ma_gvhd=ma_gvhd
         )
+        TeacherModel.update_so_luong_by_magvhd(ma_gv=ma_gvhd)
         return jsonify({"message": "Đã gửi yêu cầu!", "code": 200}), 200
 
     @staticmethod

@@ -144,3 +144,4 @@ class TeacherController:
                 masv=ma_sv
             )
             return jsonify({"message": "Đã bỏ đề tài thành công!", "code": 200}), 200
+        return jsonify({"message": "Chức năng không tồn tại vui lòng kiểm tra lại!", "code": 412}), 412

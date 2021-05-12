@@ -38,6 +38,18 @@ class TeacherModel(BaseModel):
             return None
 
     @staticmethod
+    def get_so_luong_by_ma(ma_gv):
+        try:
+            return TeacherModel.get(TeacherModel.MaGV == ma_gv).SoLuong
+        except:
+            print(f"Không tìm thấy số lượng của mã giáo viên {ma_gv}")
+            return False
+
+    @staticmethod
+    def update_so_luong_by_magvhd(ma_gv, soluong=1):
+        return TeacherModel.update(SoLuong=TeacherModel.SoLuong + soluong).where(TeacherModel.MaGV == ma_gv).execute()
+
+    @staticmethod
     def insert_many_teacher(data_teacher):
         return TeacherModel.insert_many(data_teacher).execute()
 
