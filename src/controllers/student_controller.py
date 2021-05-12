@@ -80,9 +80,6 @@ class StudentController:
 
             filename = image.filename
 
-            if not filename:
-                continue
-
             path_image_save = os.path.join(APP_IMAGE_DIR, str(student_id))
             os.makedirs(path_image_save, exist_ok=True)
 
