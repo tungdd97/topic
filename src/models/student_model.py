@@ -70,4 +70,10 @@ class StudentModel(BaseModel):
             IDDeTai=""
         ).where(StudentModel.MaSV == masv).execute()
 
+    @staticmethod
+    def get_data_by_project(project_id):
+        try:
+            return StudentModel.get(StudentModel.IDDeTai == project_id)
+        except:
+            return None
 

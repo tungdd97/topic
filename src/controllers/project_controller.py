@@ -16,11 +16,12 @@ class ProjectController:
             print(e)
             return jsonify({"message": "Có lỗi phát sinh trong server!", "code": 500}), 500
         for project in projects:
+            check = StudentModel.get_data_by_project(project.id)
             result.append({
                 "id": project.id,
                 "Ten": project.Ten,
                 "Mota": project.MoTa,
-                "TrangThai": project.TrangThai,
+                "TrangThai": project.TrangThai if not check else "Đã chọn",
                 "GhiChu": project.GhiChu
             })
         return jsonify({"message": "request thành công!", "data": result, "code": 200}), 200
@@ -34,11 +35,12 @@ class ProjectController:
             print(e)
             return jsonify({"message": "Có lỗi phát sinh trong server!", "code": 500}), 500
         for project in projects:
+            check = StudentModel.get_data_by_project(project.id)
             result.append({
                 "id": project.id,
                 "Ten": project.Ten,
                 "Mota": project.MoTa,
-                "TrangThai": project.TrangThai,
+                "TrangThai": project.TrangThai if not check else "Đã chọn",
                 "GhiChu": project.GhiChu
             })
         return jsonify({"message": "request thành công!", "data": result, "code": 200}), 200
