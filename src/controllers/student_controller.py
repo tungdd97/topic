@@ -1,3 +1,5 @@
+import os
+
 from flask import request, json, jsonify
 from src.common.utils import get_current_time
 from src.models.comment_model import CommentModel
@@ -74,13 +76,18 @@ class StudentController:
         all_path_images = list()
         all_path_files = list()
         for image in images:
-            folder_save = APP_IMAGE_DIR + "/" + str(student_id)
 
             filename = image.filename
 
-            path_image_save = get_path_file(folder_save, filename, is_path_df=False)
+            if not filename:
+                continue
 
-            image.save(path_image_save)
+            path_image_save = os.path.join(APP_IMAGE_DIR, str(student_id))
+            os.makedirs(path_image_save, exist_ok=True)
+
+            file_save = os.path.join(path_image_save, filename)
+
+            image.save(file_save)
 
             all_path_images.append(path_image_save)
 

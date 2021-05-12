@@ -31,6 +31,8 @@ def get_path_file(path=None, file_name=None, is_path_df=True, is_create=True):
         return os.path.join(path, file_name)
     else:
         path = path.replace('//', '/')
+        if os.path.exists(path):
+            return os.path.join(path, file_name)
         if is_create:
             create_folder_by_path(path)
         return os.path.join(path, file_name)
