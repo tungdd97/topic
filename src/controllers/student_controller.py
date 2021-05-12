@@ -111,6 +111,7 @@ class StudentController:
                 "Tuan": week,
                 "GhiChu": note if note else "",
                 "IDSinhVien": student_id,
+                "Diem": "",
                 "HinhAnh": "<image_upload>".join(all_path_images),
                 "File": "<file_upload>".join(all_path_files),
                 "Url": "",
