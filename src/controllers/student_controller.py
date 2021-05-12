@@ -7,6 +7,7 @@ from src.models.student_model import StudentModel
 from src.controllers.file_controller import get_path_file
 from src.models.teacher_model import TeacherModel
 from src.models.report_weekly_model import ReportWeeklyModel
+from src.models.project_model import ProjectModel
 from src.common import APP_FILE_DIR, APP_IMAGE_DIR
 
 
@@ -170,6 +171,11 @@ class StudentController:
         students = StudentModel.get_all_student()
 
         for student in students:
+            detai = ""
+            if student.IDDeTai:
+                project = ProjectModel.get_project_by_id(project_id=int(student.IDDeTai))
+                if project:
+                    detai = project.Ten
             data = {
                 "masv": student.MaSV,
                 "ten": student.Ten,
@@ -177,7 +183,7 @@ class StudentController:
                 "hom_thu": "",
                 "trang_thai": student.TrangThai if not student.IDDeTai else "DaChon",
                 "gvhd": student.MaGVHD,
-                "detai": "De tai"
+                "detai": detai
             }
             result.append(data)
         return jsonify({"message": "Tạo ghi chú thành công!", "data": result, "paging": paging, "code": 200}), 200

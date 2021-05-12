@@ -6,23 +6,24 @@ from src.common.utils import get_current_time
 from src.models.student_model import StudentModel
 from src.models.report_weekly_model import ReportWeeklyModel
 from src.models.report_model import ReportModel
+from src.models.teacher_model import TeacherModel
 from configs import Topic
 
 
 class ReportWeeklyController:
 
     @staticmethod
-    def get_report_by_week(week):
+    def get_report_by_week(teacher_id, week):
         try:
             args = request.args
-            ma_gv = args.get("magv")
         except:
             return jsonify({"message": "Không thể lấy dữ liệu!", "code": 412}), 412
         results = list()
         report_weekly = ReportWeeklyModel.get_report_by_week(week=week)
         for report_week in report_weekly:
+            ma_gv = TeacherModel.get_magvhd_by_id(teacher_id=teacher_id)
             sinhvien = StudentModel.get_student_by_id(report_week.IDSinhVien)
-            if sinhvien.MaGVHD != ma_gv:
+            if not ma_gv or sinhvien.MaGVHD != ma_gv:
                 continue
             data = {
                 "tuan": week,

@@ -50,4 +50,4 @@ class TeacherModel(BaseModel):
         try:
             return TeacherModel.get(TeacherModel.id == int(teacher_id)).MaGV
         except:
-            raise
+            return None

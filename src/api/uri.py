@@ -21,7 +21,7 @@ class URI:
 
     CONTACT = "/contact"
 
-    REPORT_WEEKLY = "/report_weekly/<week>"
+    REPORT_WEEKLY = "<teacher_id>/report_weekly/<week>"
     REPORT_WEEKLY_DETAIL = "/report_weekly/<week_id>/<week>"
 
     DOWNLOAD_IMAGE = "/download/image/<week_id>/<image_id>"
