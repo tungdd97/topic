@@ -67,7 +67,7 @@ class StudentModel(BaseModel):
     @staticmethod
     def cancel_project_by_teacher(masv):
         return StudentModel.update(
-            IDDeTai=None
+            IDDeTai=""
         ).where(StudentModel.MaSV == masv).execute()
 
 
