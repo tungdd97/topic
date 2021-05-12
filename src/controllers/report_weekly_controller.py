@@ -34,7 +34,7 @@ class ReportWeeklyController:
                 "file": Topic.HOST + "/download/file/" + str(report_week.id) + "/" + str(
                     report_week.IDSinhVien) if report_week.File else "",
                 # "ghichu": report_week.GhiChu,
-                "diem": ""
+                "diem": report_week.Diem
             }
             if week in ["8", "16"]:
                 try:
@@ -68,34 +68,41 @@ class ReportWeeklyController:
         #         week_id=week_id,
         #         ghi_chu=ghi_chu
         #     )
-        if week in ["8", "16"]:
-            diem = request_data.get("diem")
-            if diem and ma_sv:
-                id_sv = StudentModel.get_student_by_ma(ma_sv)
-                if not id_sv:
-                    return jsonify({"message": "Không tìm thấy mã sinh viên để cập nhật điểm!", "code": 412}), 412
-                lan = 1
-                if week == "16":
-                    lan = 2
-                try:
-                    reports = ReportModel.get_report_id_sinh_vien(id_sinh_vien=id_sv)
-                except:
-                    reports = None
-                if not reports:
-                    data_insert_report = {
-                        "IDSinhVien": id_sv,
-                        "IDGVHD": "",
-                        "DiemLan1": "",
-                        "DiemLan2": "",
-                        "DieuKienBaoVe": "",
-                        "ThoiGianTao": get_current_time(),
-                        "ThoiGianCapNhat": get_current_time()
-                    }
+        diem = request_data.get("diem")
+        if not diem or not ma_sv:
+            return jsonify({"message": "Không tìm thấy mã sinh viên để cập nhật điểm!", "code": 412}), 412
+        id_sv = StudentModel.get_student_by_ma(ma_sv)
+        if not id_sv:
+            return jsonify({"message": "Không tìm thấy mã sinh viên để cập nhật điểm!", "code": 412}), 412
+        if week not in ["8", "16"]:
+            ReportWeeklyModel.update_point_report(
+                week=week,
+                id_sv=id_sv,
+                diem=diem
+            )
+        else:
+            lan = 1
+            if week == "16":
+                lan = 2
+            try:
+                reports = ReportModel.get_report_id_sinh_vien(id_sinh_vien=id_sv)
+            except:
+                reports = None
+            if not reports:
+                data_insert_report = {
+                    "IDSinhVien": id_sv,
+                    "IDGVHD": "",
+                    "DiemLan1": "",
+                    "DiemLan2": "",
+                    "DieuKienBaoVe": "",
+                    "ThoiGianTao": get_current_time(),
+                    "ThoiGianCapNhat": get_current_time()
+                }
 
-                    report_id = ReportModel.insert_one(data_insert_report)
-                ReportModel.update_point_report(
-                    id_sinh_vien=id_sv,
-                    point=diem,
-                    lan=lan
-                )
+                report_id = ReportModel.insert_one(data_insert_report)
+            ReportModel.update_point_report(
+                id_sinh_vien=id_sv,
+                point=diem,
+                lan=lan
+            )
         return jsonify({"message": "Cập nhật thông tin thành công!", "code": 200}), 200

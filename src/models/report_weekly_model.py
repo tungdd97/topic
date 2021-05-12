@@ -9,6 +9,7 @@ class ReportWeeklyModel(BaseModel):
     Tuan = IntegerField()
     GhiChu = TextField()
     IDSinhVien = TextField()
+    Diem = TextField()
     HinhAnh = TextField()
     File = TextField()
     Url = TextField()
@@ -33,15 +34,16 @@ class ReportWeeklyModel(BaseModel):
     @staticmethod
     def get_report_by_week_student_id(week, student_id):
         try:
-            return ReportWeeklyModel.get((ReportWeeklyModel.Tuan == int(week)) & (ReportWeeklyModel.IDSinhVien == student_id))
+            return ReportWeeklyModel.get(
+                (ReportWeeklyModel.Tuan == int(week)) & (ReportWeeklyModel.IDSinhVien == student_id))
         except:
             return None
 
     @staticmethod
-    def update_note_report(week_id, ghi_chu):
+    def update_point_report(week, id_sv, diem):
         return ReportWeeklyModel.update(
-            GhiChu=ghi_chu
-        ).where(ReportWeeklyModel.id == week_id).execute()
+            Diem=diem
+        ).where((ReportWeeklyModel.Tuan == week) & (ReportWeeklyModel.IDSinhVien == id_sv)).execute()
 
     @staticmethod
     def update_file_report(week_id, ghi_chu, hinhanh, file, thoigiancapnhap):
