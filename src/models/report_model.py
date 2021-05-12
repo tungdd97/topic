@@ -6,8 +6,8 @@ import json
 
 
 class ReportModel(BaseModel):
-    IDSinhVien = IntegerField()
-    IDGVHD = IntegerField()
+    IDSinhVien = CharField()
+    IDGVHD = CharField()
     DiemLan1 = TextField()
     DiemLan2 = TextField()
     DieuKienBaoVe = CharField()
@@ -23,16 +23,16 @@ class ReportModel(BaseModel):
 
     @staticmethod
     def get_report_id_sinh_vien(id_sinh_vien):
-        return ReportModel.get(ReportModel.IDSinhVien == id_sinh_vien)
+        return ReportModel.get(ReportModel.IDSinhVien == str(id_sinh_vien))
 
     @staticmethod
     def update_point_report(id_sinh_vien, point, lan=1):
         if lan == 1:
             return ReportModel.update(
                 DiemLan1=point
-            ).where(ReportModel.IDSinhVien == id_sinh_vien).execute()
+            ).where(ReportModel.IDSinhVien == str(id_sinh_vien)).execute()
         if lan == 2:
             return ReportModel.update(
                 DiemLan2=point
-            ).where(ReportModel.IDSinhVien == id_sinh_vien).execute()
+            ).where(ReportModel.IDSinhVien == str(id_sinh_vien)).execute()
 
