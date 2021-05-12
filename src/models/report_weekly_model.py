@@ -32,7 +32,10 @@ class ReportWeeklyModel(BaseModel):
 
     @staticmethod
     def get_report_by_week_student_id(week, student_id):
-        return ReportWeeklyModel.get((ReportWeeklyModel.Tuan == int(week)) & (ReportWeeklyModel.IDSinhVien == student_id))
+        try:
+            return ReportWeeklyModel.get((ReportWeeklyModel.Tuan == int(week)) & (ReportWeeklyModel.IDSinhVien == student_id))
+        except:
+            return None
 
     @staticmethod
     def update_note_report(week_id, ghi_chu):
