@@ -13,3 +13,8 @@ def get_report_weekly(teacher_id, week):
 @report_weekly_mod.route(URI.REPORT_WEEKLY_DETAIL, methods=["PUT"])
 def update_report_weekly(week):
     return ReportWeeklyController.update_information_report(week=week)
+
+
+@report_weekly_mod.route(URI.REPORT_BROWSE, methods=["GET"])
+def browse_report_weekly(teacher_id, masv):
+    return ReportWeeklyController.browse_report_weekly(teacher_id, masv)

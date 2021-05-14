@@ -63,3 +63,13 @@ class TeacherModel(BaseModel):
             return TeacherModel.get(TeacherModel.id == int(teacher_id)).MaGV
         except:
             return None
+
+    @staticmethod
+    def get_teacher_by_where(where=None, skip=None, limit=None, is_full=False):
+        if is_full:
+            return TeacherModel.select().where(where).execute()
+        return TeacherModel.select().where(where).offset(skip).limit(limit).execute()
+
+    @staticmethod
+    def count_teacher_by_where(where):
+        return TeacherModel.select().where(where).count()

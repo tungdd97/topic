@@ -84,10 +84,7 @@ class ReportWeeklyController:
             lan = 1
             if week == "16":
                 lan = 2
-            try:
-                reports = ReportModel.get_report_id_sinh_vien(id_sinh_vien=id_sv)
-            except:
-                reports = None
+            reports = ReportModel.get_report_id_sinh_vien(id_sinh_vien=id_sv)
             if not reports:
                 data_insert_report = {
                     "IDSinhVien": id_sv,
@@ -106,3 +103,34 @@ class ReportWeeklyController:
                 lan=lan
             )
         return jsonify({"message": "Cập nhật thông tin thành công!", "code": 200}), 200
+
+    @staticmethod
+    def browse_report_weekly(teacher_id, masv):
+        id_sinh_vien = StudentModel.get_student_by_ma(masv=masv)
+        if not id_sinh_vien:
+            return jsonify({"message": "Không tìm thấy thông tin sinh viên!", "code": 412}), 412
+        reports = ReportWeeklyModel.get_report_by_student_id(student_id=id_sinh_vien)
+        if not reports:
+            return jsonify({"message": "Không tìm thấy thông tin báo cáo sinh viên!", "code": 412}), 412
+        all_weekly = list()
+        for report in reports:
+            point = None
+            if report.Tuan in ["8", "16"]:
+                try:
+                    points = ReportModel.get_report_id_sinh_vien(id_sinh_vien=id_sinh_vien)
+                except:
+                    points = None
+                if points:
+                    if report.Tuan == "8":
+                        point = points.DiemLan1
+                    if report.Tuan == "16":
+                        point = points.DiemLan2
+            else:
+                point = report.Diem
+            if not point:
+                all_weekly.append(report.Tuan)
+        for i in range(1, 21):
+            if i not in all_weekly:
+                all_weekly.append(i)
+
+        return jsonify({"message": "lấy thông tin thành công!", "data": all_weekly, "code": 200}), 200

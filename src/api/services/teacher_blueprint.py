@@ -6,7 +6,7 @@ teacher_mod = Blueprint(__name__, __name__)
 
 
 @teacher_mod.route(URI.TEACHER, methods=["GET"])
-def get_all_teacher():
+def get_all_teacher_not_enough_student():
     return TeacherController.get_all_teacher_not_enough_student()
 
 
@@ -24,3 +24,7 @@ def get_teacher_detail(teacher_id):
 def edit_project_by_teacher(teacher_id):
     return TeacherController.edit_project_by_teacher(teacher_id)
 
+
+@teacher_mod.route(URI.TEACHERS, methods=["POST"])
+def all_teacher():
+    return TeacherController.get_all_teacher()

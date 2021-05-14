@@ -28,6 +28,10 @@ class ReportWeeklyModel(BaseModel):
         return ReportWeeklyModel.select().where(ReportWeeklyModel.Tuan == week).execute()
 
     @staticmethod
+    def get_report_by_student_id(student_id):
+        return ReportWeeklyModel.select().where(ReportWeeklyModel.IDSinhVien == student_id).execute()
+
+    @staticmethod
     def get_report_by_id(week_id, image_id):
         return ReportWeeklyModel.get((ReportWeeklyModel.id == week_id) & (ReportWeeklyModel.IDSinhVien == image_id))
 

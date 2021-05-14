@@ -6,6 +6,7 @@ class URI:
     CHANGE_PASSWORD = "/change_password"
 
     STUDENT = "/student"
+    STUDENTS = "/students"
     STUDENT_TEACHER = "/student/<student_id>/teacher"
     STUDENT_PROJECT = "/student/<student_id>/project"
 
@@ -16,6 +17,8 @@ class URI:
 
     TEACHER_PROJECT_DETAIL = "teacher_project_detail/<teacher_id>"
     TEACHER = "/teacher"
+
+    TEACHERS = "/teachers"
 
     TEACHER_DETAIL = "/teacher/<teacher_id>"
 
@@ -28,3 +31,5 @@ class URI:
     DOWNLOAD_FILE = "/download/file/<week_id>/<file_id>"
 
     REPORT_POINT = "/report/<week>/point"
+    REPORT = "/reports"
+    REPORT_BROWSE = "<teacher_id>/browse/<masv>"

@@ -77,3 +77,14 @@ class StudentModel(BaseModel):
         except:
             return None
 
+    @staticmethod
+    def count_student_do_project():
+        return StudentModel.select().where(StudentModel.IDDeTai != "").count()
+
+    @staticmethod
+    def count_student_not_do_project():
+        return StudentModel.select().where(StudentModel.IDDeTai == "").count()
+
+    @staticmethod
+    def count_student():
+        return StudentModel.select().count()

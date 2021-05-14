@@ -145,3 +145,71 @@ class TeacherController:
             )
             return jsonify({"message": "Đã bỏ đề tài thành công!", "code": 200}), 200
         return jsonify({"message": "Chức năng không tồn tại vui lòng kiểm tra lại!", "code": 412}), 412
+
+    @staticmethod
+    def get_all_teacher():
+        try:
+            request_data = request.data
+            request_data = json.loads(request_data)
+        except:
+            return jsonify({"message": "Không thể lấy dữ liệu!", "code": 412}), 412
+
+        magv = request_data.get("ma_gv")
+        ten_gv = request_data.get("ten_gv")
+        sl = request_data.get("so_luong")
+        page = request_data.get("page")
+        per_page = request_data.get("per_page")
+
+        where = "( TeacherModel.ChucVu == 'GiaoVien' )"
+
+        if magv:
+            where += " & ( TeacherModel.MaGV.contains(magv) )"
+
+        if ten_gv:
+            where += " & ( TeacherModel.Ten.contains(ten_gv) )"
+
+        if sl:
+            where += " & ( TeacherModel.SoLuong == int(sl) )"
+        result = list()
+        paging = dict()
+        if where:
+            where = eval(where)
+        tong = TeacherModel.count_teacher_by_where(where)
+        if tong == 0:
+            return jsonify({"messgae": "request thành công!", "data": result, "code": 200}), 200
+        if page == -1:
+            teachers = TeacherModel.get_teacher_by_where(where=where, is_full=True)
+        else:
+            paging = TeacherController.generate_paging(
+                page=page,
+                per_page=per_page,
+                sum_page=tong
+            )
+            skip = per_page * (page - 1)
+            limit = per_page
+            teachers = TeacherModel.get_teacher_by_where(where=where, skip=skip, limit=limit)
+        for teacher in teachers:
+            data = {
+                "ten": teacher.Ten,
+                "soluong": teacher.SoLuong,
+                "magv": teacher.MaGV,
+                "email": teacher.Email
+            }
+            result.append(data)
+        return jsonify({"messgae": "request thành công!", "data": result, "paging": paging, "code": 200}), 200
+
+    @staticmethod
+    def generate_paging(page, per_page, sum_page):
+        paging = dict()
+        if page >= 0 and per_page:
+            total_page = sum_page // per_page
+            total_page = total_page if sum_page % per_page <= 0 else total_page + 1
+            if sum_page == 0:
+                page = 0
+            paging = {
+                "page": page,
+                "per_page": per_page,
+                "page_count": total_page,
+                "total_count": sum_page,
+            }
+        return paging

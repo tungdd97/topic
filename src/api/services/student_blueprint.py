@@ -34,3 +34,8 @@ def update_teacher(student_id):
 @student_mod.route(URI.STUDENT_PROJECT, methods=["PUT"])
 def update_project(student_id):
     return StudentController.update_request_select_project(student_id)
+
+
+@student_mod.route(URI.STUDENTS, methods=["POST"])
+def get_all_students():
+    return StudentController.get_list_student()

@@ -23,7 +23,10 @@ class ReportModel(BaseModel):
 
     @staticmethod
     def get_report_id_sinh_vien(id_sinh_vien):
-        return ReportModel.get(ReportModel.IDSinhVien == str(id_sinh_vien))
+        try:
+            return ReportModel.get(ReportModel.IDSinhVien == str(id_sinh_vien))
+        except:
+            return None
 
     @staticmethod
     def update_point_report(id_sinh_vien, point, lan=1):
