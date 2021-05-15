@@ -26,8 +26,6 @@ class UserController:
         if not user_data:
             return jsonify({"message": "Không tìm thấy thông tin tài khoản!", "code": 413}), 413
         ma = None
-        if user_data.Quyen == "sinhvien":
-            ma = StudentModel.get_student_by_id(int(user_data.LienKet)).MaSV
         if user_data.Quyen == "giaovien":
             ma = TeacherModel.get_magvhd_by_id(int(user_data.LienKet))
         data = {
@@ -41,12 +39,23 @@ class UserController:
         if user_data.Quyen == "sinhvien":
             student_data = StudentModel.get_student_by_id(student_id=user_data.LienKet)
             if student_data:
+                data["ma"] = student_data.MaSV
                 if student_data.IDDeTai:
                     data["iddetai"] = student_data.IDDeTai
                 if student_data.MaGVHD:
                     teacher_id = TeacherModel.get_id_by_ma(student_data.MaGVHD)
                     if teacher_id:
                         data["id_gvhd"] = teacher_id
+                check = student_data.MaSV.replace("MASV2", "")
+                check = int(check)
+                i = check - 3 if check >= 3 else check
+                if int(i) == 0:
+                    data["start_time_do_an"] = "01/05/2021"
+                if int(i) == 1:
+                    data["start_time_do_an"] = "19/03/2021"
+                if int(i) == 2:
+                    data["start_time_do_an"] = "25/12/2020"
+
         return jsonify({"message": "Đăng nhập thành công!", "data": data, "code": 200}), 200
 
     @staticmethod
