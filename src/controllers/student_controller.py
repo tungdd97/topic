@@ -180,6 +180,7 @@ class StudentController:
                 if project:
                     detai = project.Ten
             data = {
+                "id": student.id,
                 "masv": student.MaSV,
                 "ten": student.Ten,
                 "lop": "12312312",
@@ -222,6 +223,7 @@ class StudentController:
                 if project:
                     detai = project.Ten
             data = {
+                "id": student.id,
                 "masv": student.MaSV,
                 "ten": student.Ten,
                 "lop": "12312312",
