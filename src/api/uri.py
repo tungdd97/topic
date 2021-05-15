@@ -7,6 +7,7 @@ class URI:
 
     STUDENT = "/student"
     STUDENTS = "/students"
+    STUDENT_NOT_TEACHER = "/student_not_teacher"
     STUDENT_TEACHER = "/student/<student_id>/teacher"
     STUDENT_PROJECT = "/student/<student_id>/project"
 
@@ -23,6 +24,8 @@ class URI:
     TEACHER_DETAIL = "/teacher/<teacher_id>"
 
     CONTACT = "/contact"
+
+    MESSAGE = "/message"
 
     REPORT_WEEKLY = "<teacher_id>/report_weekly/<week>"
     REPORT_WEEKLY_DETAIL = "/report_weekly/<week>"

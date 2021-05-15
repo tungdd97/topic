@@ -39,3 +39,8 @@ def update_project(student_id):
 @student_mod.route(URI.STUDENTS, methods=["POST"])
 def get_all_students():
     return StudentController.get_list_student()
+
+
+@student_mod.route(URI.STUDENT_NOT_TEACHER, methods=["GET"])
+def student_not_teacher():
+    return StudentController.student_not_teacher()

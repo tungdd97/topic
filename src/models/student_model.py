@@ -88,3 +88,7 @@ class StudentModel(BaseModel):
     @staticmethod
     def count_student():
         return StudentModel.select().count()
+
+    @staticmethod
+    def find_student_not_teacher():
+        return StudentModel.select().where(StudentModel.MaGVHD == "").execute()

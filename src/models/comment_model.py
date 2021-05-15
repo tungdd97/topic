@@ -25,3 +25,7 @@ class CommentModel(BaseModel):
             "ThoiGianTao": ThoiGianTao
         }
         return CommentModel.insert(data_insert).execute()
+
+    @staticmethod
+    def find_list_message_by_type(loai_ghi_chu):
+        return CommentModel.select().where(CommentModel.LoaiGhiChu == loai_ghi_chu).execute()

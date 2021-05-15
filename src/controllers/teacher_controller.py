@@ -6,6 +6,7 @@ from src.common.utils import get_current_time
 from src.models.teacher_model import TeacherModel
 from src.models.project_model import ProjectModel
 from src.models.student_model import StudentModel
+from src.models.comment_model import CommentModel
 
 
 class TeacherController:
@@ -213,3 +214,15 @@ class TeacherController:
                 "total_count": sum_page,
             }
         return paging
+
+    @staticmethod
+    def get_list_message_dean():
+        messages = CommentModel.find_list_message_by_type(loai_ghi_chu="sinh_vien_chua_nhan_do_an")
+        result = list()
+        for message in messages:
+            data = {
+                "masv": message.NguoiTaoGhiChu,
+                "noi_dung": message.NoiDung
+            }
+            result.append(data)
+        return jsonify({"messgae": "request thành công!", "data": result, "code": 200}), 200

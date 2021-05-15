@@ -28,3 +28,8 @@ def edit_project_by_teacher(teacher_id):
 @teacher_mod.route(URI.TEACHERS, methods=["POST"])
 def all_teacher():
     return TeacherController.get_all_teacher()
+
+
+@teacher_mod.route(URI.MESSAGE, methods=["GET"])
+def message_dean():
+    return TeacherController.get_list_message_dean()

@@ -209,3 +209,26 @@ class StudentController:
             project_id=project_id
         )
         return jsonify({"message": "Đã gửi yêu cầu!", "code": 200}), 200
+
+    @staticmethod
+    def student_not_teacher():
+        result = list()
+        students = StudentModel.find_student_not_teacher()
+
+        for student in students:
+            detai = ""
+            if student.IDDeTai:
+                project = ProjectModel.get_project_by_id(project_id=int(student.IDDeTai))
+                if project:
+                    detai = project.Ten
+            data = {
+                "masv": student.MaSV,
+                "ten": student.Ten,
+                "lop": "12312312",
+                "hom_thu": "",
+                "trang_thai": student.TrangThai if not student.IDDeTai else "DaChon",
+                "gvhd": student.MaGVHD,
+                "detai": detai
+            }
+            result.append(data)
+        return jsonify({"message": "Tạo ghi chú thành công!", "data": result, "code": 200}), 200
