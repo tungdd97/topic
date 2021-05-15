@@ -25,12 +25,18 @@ class UserController:
         )
         if not user_data:
             return jsonify({"message": "Không tìm thấy thông tin tài khoản!", "code": 413}), 413
+        ma = None
+        if user_data.Quyen == "sinhvien":
+            ma = StudentModel.get_student_by_id(int(user_data.LienKet)).MaSV
+        if user_data.Quyen == "giaovien":
+            ma = TeacherModel.get_magvhd_by_id(int(user_data.LienKet))
         data = {
             "username": username,
             "permission": user_data.Quyen,
             "lienket": user_data.LienKet,
             "iddetai": "",
             "id_gvhd": "",
+            "ma": ma
         }
         if user_data.Quyen == "sinhvien":
             student_data = StudentModel.get_student_by_id(student_id=user_data.LienKet)

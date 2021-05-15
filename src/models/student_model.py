@@ -54,6 +54,7 @@ class StudentModel(BaseModel):
     def get_student_by_id(student_id):
         return StudentModel.get(StudentModel.id == student_id)
 
+
     @staticmethod
     def get_student_by_ma(masv):
         return StudentModel.get(StudentModel.MaSV == masv).id
