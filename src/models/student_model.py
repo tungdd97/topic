@@ -47,13 +47,18 @@ class StudentModel(BaseModel):
         return StudentModel.select().where(StudentModel.MaGVHD == magvhd).execute()
 
     @staticmethod
-    def get_all_student():
-        return StudentModel.select().execute()
+    def get_all_student(where=None, skip=None, limit=None, is_full=False):
+        if is_full:
+            if not where:
+                return StudentModel.select().execute()
+            return StudentModel.select().where(where).execute()
+        if not where:
+            return StudentModel.select().offset(skip).limit(limit).execute()
+        return StudentModel.select().where(where).offset(skip).limit(limit).execute()
 
     @staticmethod
     def get_student_by_id(student_id):
         return StudentModel.get(StudentModel.id == student_id)
-
 
     @staticmethod
     def get_student_by_ma(masv):
@@ -93,3 +98,9 @@ class StudentModel(BaseModel):
     @staticmethod
     def find_student_not_teacher():
         return StudentModel.select().where(StudentModel.MaGVHD == "").execute()
+
+    @staticmethod
+    def count_student_by_where(where):
+        if not where:
+            return StudentModel.select().count()
+        return StudentModel.select().where(where).count()

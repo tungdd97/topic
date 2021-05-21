@@ -165,13 +165,45 @@ class StudentController:
         page = param.get("page", 1)
         per_page = param.get("per_page", 10)
 
-        page = 0
+        where = ""
 
-        paging = {
-            "page": page,
-            "per_page": per_page,
-        }
-        students = StudentModel.get_all_student()
+        if ten:
+            if not where:
+                where = "( StudentModel.Ten.contains(ten) )"
+            else:
+                where += " & ( StudentModel.Ten.contains(ten) )"
+
+        if ma_sv:
+            if not where:
+                where = "( StudentModel.MaSV.contains(ma_sv) )"
+            else:
+                where += " & ( StudentModel.MaSV.contains(ma_sv) )"
+
+        if gvhd:
+            if not where:
+                where = "( StudentModel.MaGVHD.contains(gvhd) )"
+            else:
+                where += " & ( StudentModel.MaGVHD.contains(gvhd) )"
+        result = list()
+        paging = dict()
+        if where:
+            where = eval(where)
+
+
+        tong = StudentModel.count_student_by_where(where)
+        if tong == 0:
+            return jsonify({"messgae": "request thành công!", "data": result, "code": 200}), 200
+        if page == -1:
+            students = StudentModel.get_all_student(where=where, is_full=True)
+        else:
+            paging = StudentController.generate_paging(
+                page=page,
+                per_page=per_page,
+                sum_page=tong
+            )
+            skip = per_page * (page - 1)
+            limit = per_page
+            students = StudentModel.get_all_student(where=where, skip=skip, limit=limit)
 
         for student in students:
             detai = ""
@@ -191,6 +223,22 @@ class StudentController:
             }
             result.append(data)
         return jsonify({"message": "Tạo ghi chú thành công!", "data": result, "paging": paging, "code": 200}), 200
+
+    @staticmethod
+    def generate_paging(page, per_page, sum_page):
+        paging = dict()
+        if page >= 0 and per_page:
+            total_page = sum_page // per_page
+            total_page = total_page if sum_page % per_page <= 0 else total_page + 1
+            if sum_page == 0:
+                page = 0
+            paging = {
+                "page": page,
+                "per_page": per_page,
+                "page_count": total_page,
+                "total_count": sum_page,
+            }
+        return paging
 
     @staticmethod
     def update_request_select_project(student_id):
