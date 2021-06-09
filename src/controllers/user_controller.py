@@ -46,8 +46,7 @@ class UserController:
                     teacher_id = TeacherModel.get_id_by_ma(student_data.MaGVHD)
                     if teacher_id:
                         data["id_gvhd"] = teacher_id
-                check = student_data.MaSV.replace("MASV2", "")
-                check = int(check)
+                check = int(user_data.LienKet)
                 i = check - 3 if check >= 3 else check
                 if int(i) == 0:
                     data["start_time_do_an"] = "01/05/2021"
@@ -77,7 +76,7 @@ class UserController:
         if check_user_name:
             return jsonify({"message": f"Tài khoản {username} đã tồn tại!", "code": 413}), 413
         lienket = None
-        if permission == "sinhvien":
+        if permission == "SinhVien":
             student_data = {
                 "Ten": request_data.get("ten"),
                 "MaSV": request_data.get("masv"),
@@ -92,20 +91,21 @@ class UserController:
             }
 
             lienket = StudentModel.insert_one_student(data=student_data)
-        if permission == "giaovien":
+        if permission in ["GiaoVien", "TruongKhoa"]:
             teacher_data = {
                 "Ten": request_data.get("ten"),
                 "SoLuong": 0,
                 "MaGV": request_data.get("magv"),
                 "SDT": request_data.get("sdt"),
                 "Email": request_data.get("email"),
-                "ChucVu": request_data.get("chucvu") if request_data.get("chucvu") else "GiaoVien",
+                "ChucVu": permission,
                 "TrangThai": "",
                 "ThoiGianTao": get_current_time(),
                 "ThoiGianCapNhat": get_current_time()
             }
 
             lienket = TeacherModel.insert_many_teacher(teacher_data)
+
         user_data = {
             "TaiKhoan": username,
             "MatKhau": str(password_md5),

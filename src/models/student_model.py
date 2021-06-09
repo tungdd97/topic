@@ -14,6 +14,7 @@ class StudentModel(BaseModel):
     MaGVHD = CharField()
     TrangThai = CharField()
     IDDeTai = CharField()
+    Cap = CharField(max_length=2)
     ThoiGianTao = TimestampField()
     ThoiGianCapNhat = TimestampField()
 
@@ -80,6 +81,13 @@ class StudentModel(BaseModel):
     def get_data_by_project(project_id):
         try:
             return StudentModel.get(StudentModel.IDDeTai == project_id)
+        except:
+            return None
+
+    @staticmethod
+    def get_level_student_id(student_id):
+        try:
+            return StudentModel.get(StudentModel.id == student_id).Cap
         except:
             return None
 

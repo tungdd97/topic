@@ -96,7 +96,8 @@ class TeacherController:
                 "masv": student.MaSV,
                 "ten": student.Ten,
                 "detai": project.Ten if project else "",
-                "ghichu": project.GhiChu if project else ""
+                "ghichu": project.GhiChu if project else "",
+                "cap": student.Cap
             }
             result.append(data)
         return jsonify({"messgae": "request thành công!", "data": result, "code": 200}), 200

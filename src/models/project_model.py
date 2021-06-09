@@ -13,6 +13,8 @@ class ProjectModel(BaseModel):
     NguoiTao = TextField()
     Loai = CharField()
     GhiChu = TextField()
+    Cap = CharField(max_length=2)
+    ChiDinh = CharField()
     ThoiGianTao = TimestampField()
     ThoiGianCapNhat = TimestampField()
 
@@ -41,7 +43,7 @@ class ProjectModel(BaseModel):
 
     @staticmethod
     def get_project_by_teacher(teacher_id):
-        return ProjectModel.select().where((ProjectModel.NguoiTao == teacher_id) & (ProjectModel.Loai == "gv")).execute()
+        return ProjectModel.select().where(ProjectModel.ChiDinh == teacher_id).execute()
 
     @staticmethod
     def insert_many_project(data_inserts):

@@ -22,26 +22,33 @@ class ProjectController:
                 "Ten": project.Ten,
                 "Mota": project.MoTa,
                 "TrangThai": project.TrangThai if not check else "Đã chọn",
-                "GhiChu": project.GhiChu
+                "GhiChu": project.GhiChu,
+                "Cap": project.Cap
             })
         return jsonify({"message": "request thành công!", "data": result, "code": 200}), 200
 
     @staticmethod
     def get_by_project_teacher(teacher_id):
         result = list()
+        id_std = request.args.get("id_std")
+
         try:
             projects = ProjectModel.get_project_by_teacher(teacher_id)
+            cap = StudentModel.get_level_student_id(id_std)
         except Exception as e:
             print(e)
             return jsonify({"message": "Có lỗi phát sinh trong server!", "code": 500}), 500
         for project in projects:
             check = StudentModel.get_data_by_project(project.id)
+            if str(project.Cap) != str(cap):
+                continue
             result.append({
                 "id": project.id,
                 "Ten": project.Ten,
                 "Mota": project.MoTa,
                 "TrangThai": project.TrangThai if not check else "Đã chọn",
-                "GhiChu": project.GhiChu
+                "GhiChu": project.GhiChu,
+                "Cap": project.Cap
             })
         return jsonify({"message": "request thành công!", "data": result, "code": 200}), 200
 
@@ -63,8 +70,10 @@ class ProjectController:
                 "NguoiTao": data.get("nguoitao"),
                 "Loai": data.get("loai", ""),
                 "GhiChu": data.get("ghichu", ""),
+                "Cap": data.get("cap", ""),
+                "ChiDinh": data.get("chi_dinh"),
                 "ThoiGianTao": get_current_time(),
-                "ThoiGianCapNhat": get_current_time()
+                "ThoiGianCapNhat": get_current_time(),
             })
         if all_project_inserts:
             try:
