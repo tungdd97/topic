@@ -102,6 +102,7 @@ class TeacherController:
             data = {
                 "masv": student.MaSV,
                 "ten": student.Ten,
+                "id_sv": student.id,
                 "detai": project.Ten if project else "",
                 "ghichu": project.GhiChu if project else "",
                 "cap": student.Cap
