@@ -52,3 +52,7 @@ class ProjectModel(BaseModel):
     @staticmethod
     def get_project_by_id(project_id):
         return ProjectModel.get(ProjectModel.id == project_id)
+
+    @staticmethod
+    def get_project_by_cap(cap):
+        return ProjectModel.select().where(ProjectModel.Cap == int(cap)).execute()

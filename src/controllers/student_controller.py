@@ -219,7 +219,8 @@ class StudentController:
                 "hom_thu": "",
                 "trang_thai": student.TrangThai if not student.IDDeTai else "DaChon",
                 "gvhd": student.MaGVHD,
-                "detai": detai
+                "detai": detai,
+                "cap": student.Cap
             }
             result.append(data)
         return jsonify({"message": "Tạo ghi chú thành công!", "data": result, "paging": paging, "code": 200}), 200
@@ -278,7 +279,8 @@ class StudentController:
                 "hom_thu": "",
                 "trang_thai": student.TrangThai if not student.IDDeTai else "DaChon",
                 "gvhd": student.MaGVHD,
-                "detai": detai
+                "detai": detai,
+                "cap": student.Cap
             }
             result.append(data)
         return jsonify({"message": "Tạo ghi chú thành công!", "data": result, "code": 200}), 200

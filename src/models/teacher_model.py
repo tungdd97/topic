@@ -31,6 +31,13 @@ class TeacherModel(BaseModel):
         ).execute()
 
     @staticmethod
+    def get_teacher_by_lt_soluong_tids(soluong, codes):
+        return TeacherModel.select().where(
+            (TeacherModel.SoLuong < soluong) &
+            (TeacherModel.ChucVu == "GiaoVien") & (TeacherModel.MaGV.in_(codes))
+        ).execute()
+
+    @staticmethod
     def get_id_by_ma(ma_gv):
         try:
             return TeacherModel.get(TeacherModel.MaGV == ma_gv).id

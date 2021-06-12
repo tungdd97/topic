@@ -14,10 +14,17 @@ class TeacherController:
     @staticmethod
     def get_all_teacher_not_enough_student():
         soluong = request.args.get("soluong", SoLuongSV.GVTiepNhan)
+        id_std = request.args.get("id_std")
 
         try:
-            teachers = TeacherModel.get_teacher_by_soluong(
-                soluong=soluong
+            cap = StudentModel.get_level_student_id(student_id=id_std)
+            all_code_teachers = list()
+            all_project_teachers = ProjectModel.get_project_by_cap(cap)
+            for project in all_project_teachers:
+                all_code_teachers.append(project.ChiDinh)
+            teachers = TeacherModel.get_teacher_by_lt_soluong_tids(
+                soluong=soluong,
+                codes=all_code_teachers
             )
         except Exception as e:
             return jsonify({"messgae": str(e), "code": 500}), 500
