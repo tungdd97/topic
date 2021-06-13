@@ -21,13 +21,13 @@ class DownloadController:
         if not image_path:
             return jsonify({"message": "Không tồn tại hình ảnh báo cáo!", "code": 413}), 413
         try:
-            folder = str(get_current_time())
-            path_file_zip = APP_ZIP_DIR + "/" + folder
-            path_file_save = get_path_file(path_file_zip, file_name=folder + ".zip", is_path_df=False)
-            with ZipFile(path_file_save, "w") as zip_new:
-                for image in image_path.split("<image_upload>"):
-                    zip_new.write(image, basename(image))
-            return send_file(path_file_save, as_attachment=True)
+            # folder = str(get_current_time())
+            # path_file_zip = APP_ZIP_DIR + "/" + folder
+            # path_file_save = get_path_file(path_file_zip, file_name=folder + ".zip", is_path_df=False)
+            # with ZipFile(path_file_save, "w") as zip_new:
+            #     for image in image_path.split("<image_upload>"):
+            #         zip_new.write(image, basename(image))
+            return send_file(image_path, as_attachment=True)
         except FileNotFoundError as f:
             print(f)
             return jsonify({"message": "Tải hình ảnh không thành công!", "code": 413}), 413
@@ -43,12 +43,12 @@ class DownloadController:
         if not file_path:
             return jsonify({"message": "Không tồn tại file báo cáo!", "code": 413}), 413
         try:
-            folder = str(get_current_time())
-            path_file_zip = APP_ZIP_DIR + "/" + folder
-            path_file_save = get_path_file(path_file_zip, file_name=folder + ".zip", is_path_df=False)
-            with ZipFile(path_file_save, "w") as zip_new:
-                for file in file_path.split("<file_upload>"):
-                    zip_new.write(file, basename(file))
-            return send_file(path_file_save, as_attachment=True)
+            # folder = str(get_current_time())
+            # path_file_zip = APP_ZIP_DIR + "/" + folder
+            # path_file_save = get_path_file(path_file_zip, file_name=folder + ".zip", is_path_df=False)
+            # with ZipFile(path_file_save, "w") as zip_new:
+            #     for file in file_path.split("<file_upload>"):
+            #         zip_new.write(file, basename(file))
+            return send_file(file_path, as_attachment=True)
         except FileNotFoundError:
             return jsonify({"message": "Tải file báo cáo không thành công!", "code": 413}), 413
