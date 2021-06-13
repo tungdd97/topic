@@ -47,7 +47,7 @@ class UserController:
                     if teacher_id:
                         data["id_gvhd"] = teacher_id
                 check = int(user_data.LienKet)
-                i = check - 3 if check >= 3 else check
+                i = check // 3 if check >= 6 else check if check < 3 else check - 3
                 if int(i) == 0:
                     data["start_time_do_an"] = "01/05/2021"
                 if int(i) == 1:
