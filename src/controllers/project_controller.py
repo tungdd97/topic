@@ -3,6 +3,7 @@ from src.common.utils import get_current_time
 from src.models.student_model import StudentModel
 from src.controllers.file_controller import get_path_file
 from src.models.project_model import ProjectModel
+from src.models.teacher_model import TeacherModel
 
 
 class ProjectController:
@@ -33,7 +34,8 @@ class ProjectController:
         id_std = request.args.get("id_std")
 
         try:
-            projects = ProjectModel.get_project_by_teacher(teacher_id)
+            ma_gv = TeacherModel.get_magvhd_by_id(teacher_id=teacher_id)
+            projects = ProjectModel.get_project_by_teacher(ma_gv)
             cap = StudentModel.get_level_student_id(id_std)
         except Exception as e:
             print(e)

@@ -42,8 +42,8 @@ class ProjectModel(BaseModel):
         return ProjectModel.select().execute()
 
     @staticmethod
-    def get_project_by_teacher(teacher_id):
-        return ProjectModel.select().where(ProjectModel.ChiDinh == teacher_id).execute()
+    def get_project_by_teacher(ma_gv):
+        return ProjectModel.select().where(ProjectModel.ChiDinh == ma_gv).execute()
 
     @staticmethod
     def insert_many_project(data_inserts):
