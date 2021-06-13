@@ -88,6 +88,9 @@ class StudentController:
 
             filename = image.filename
 
+            if not filename:
+                continue
+
             path_image_save = get_path_file(folder_save, filename, is_path_df=False)
 
             image.save(path_image_save)
@@ -98,6 +101,9 @@ class StudentController:
             folder_save = APP_FILE_DIR + "/" + str(student_id)
 
             filename = file.filename
+
+            if not filename:
+                continue
 
             path_image_save = get_path_file(folder_save, filename, is_path_df=False)
 
