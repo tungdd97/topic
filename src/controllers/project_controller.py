@@ -42,8 +42,8 @@ class ProjectController:
             return jsonify({"message": "Có lỗi phát sinh trong server!", "code": 500}), 500
         for project in projects:
             check = StudentModel.get_data_by_project(project.id)
-            if str(project.Cap) != str(cap):
-                continue
+            # if str(project.Cap) != str(cap):
+            #     continue
             result.append({
                 "id": project.id,
                 "Ten": project.Ten,
