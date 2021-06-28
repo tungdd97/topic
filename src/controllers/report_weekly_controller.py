@@ -62,12 +62,7 @@ class ReportWeeklyController:
         except:
             return jsonify({"message": "Không thể lấy dữ liệu!", "code": 412}), 412
         ma_sv = request_data.get("ma_sv")
-        # ghi_chu = request_data.get("ghi_chu")
-        # if ghi_chu:
-        #     ReportWeeklyModel.update_note_report(
-        #         week_id=week_id,
-        #         ghi_chu=ghi_chu
-        #     )
+        ghi_chu = request_data.get("ghi_chu")
         diem = request_data.get("diem")
         if not diem or not ma_sv:
             return jsonify({"message": "Không tìm thấy mã sinh viên để cập nhật điểm!", "code": 412}), 412
@@ -78,7 +73,8 @@ class ReportWeeklyController:
             ReportWeeklyModel.update_point_report(
                 week=week,
                 id_sv=id_sv,
-                diem=diem
+                diem=diem,
+                ghi_chu=ghi_chu
             )
         else:
             lan = 1
@@ -92,6 +88,7 @@ class ReportWeeklyController:
                     "DiemLan1": "",
                     "DiemLan2": "",
                     "DieuKienBaoVe": "",
+                    "GhiChu": ghi_chu,
                     "ThoiGianTao": get_current_time(),
                     "ThoiGianCapNhat": get_current_time()
                 }
@@ -100,7 +97,8 @@ class ReportWeeklyController:
             ReportModel.update_point_report(
                 id_sinh_vien=id_sv,
                 point=diem,
-                lan=lan
+                lan=lan,
+                ghi_chu=ghi_chu
             )
         return jsonify({"message": "Cập nhật thông tin thành công!", "code": 200}), 200
 
@@ -134,3 +132,28 @@ class ReportWeeklyController:
                 all_weekly.append(i)
 
         return jsonify({"message": "lấy thông tin thành công!", "data": all_weekly, "code": 200}), 200
+
+    @staticmethod
+    def get_all_comment_by_student_id(student_id):
+        reports = ReportWeeklyModel.get_report_by_student_id(student_id=student_id)
+        if not reports:
+            return jsonify({"message": "Không tìm thấy thông tin báo cáo sinh viên!", "code": 412}), 412
+        all_comment = list()
+        for report in reports:
+            ghi_chu = None
+            if report.Tuan in ["8", "16"]:
+                try:
+                    points = ReportModel.get_report_id_sinh_vien(id_sinh_vien=student_id)
+                except:
+                    points = None
+                if points:
+                    ghi_chu = points.GhiChu
+            else:
+                ghi_chu = report.GhiChu
+            data = {
+                "tuan": report.Tuan,
+                "ghichu": ghi_chu
+            }
+            all_comment.append(data)
+
+        return jsonify({"message": "lấy thông tin thành công!", "data": all_comment, "code": 200}), 200

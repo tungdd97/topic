@@ -30,6 +30,8 @@ class URI:
     REPORT_WEEKLY = "<teacher_id>/report_weekly/<week>"
     REPORT_WEEKLY_DETAIL = "/report_weekly/<week>"
 
+    ALL_COMMENT = "/comments/<student_id>"
+
     DOWNLOAD_IMAGE = "/download/image/<week_id>/<image_id>"
     DOWNLOAD_FILE = "/download/file/<week_id>/<file_id>"
 

@@ -44,9 +44,10 @@ class ReportWeeklyModel(BaseModel):
             return None
 
     @staticmethod
-    def update_point_report(week, id_sv, diem):
+    def update_point_report(week, id_sv, diem, ghi_chu):
         return ReportWeeklyModel.update(
-            Diem=diem
+            Diem=diem,
+            GhiChu=ghi_chu
         ).where((ReportWeeklyModel.Tuan == week) & (ReportWeeklyModel.IDSinhVien == id_sv)).execute()
 
     @staticmethod
