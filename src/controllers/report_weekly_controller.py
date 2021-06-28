@@ -150,6 +150,8 @@ class ReportWeeklyController:
                     ghi_chu = points.GhiChu
             else:
                 ghi_chu = report.GhiChu
+            if not ghi_chu:
+                continue
             data = {
                 "tuan": report.Tuan,
                 "ghichu": ghi_chu
